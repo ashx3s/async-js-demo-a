@@ -54,11 +54,11 @@ getCharactersPromise(staticData)
 const asyncDelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // async function to handle the request
 
-const getCharacters = async (data) => {
+async function getCharacters(data) {
   await asyncDelay(500);
   if (!data) throw new Error("No Data available");
   return data;
-};
+}
 
 // execute an async function to run the request IIFE (Immediately Invoked Function Expression)
 (async () => {
