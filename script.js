@@ -54,7 +54,7 @@ getCharactersPromise(staticData)
 const asyncDelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 // async function to handle the request
 
-async function getCharacters(data) {
+async function getCharactersAsync(data) {
   await asyncDelay(500);
   if (!data) throw new Error("No Data available");
   return data;
@@ -64,7 +64,7 @@ async function getCharacters(data) {
 (async () => {
   console.log("async/await Requesting Characters...");
   try {
-    const result = await getCharacters(staticData);
+    const result = await getCharactersAsync(staticData);
     console.log("async/await Got characters: ", result);
   } catch (error) {
     console.error("async/await error: ", error.message);
@@ -72,3 +72,33 @@ async function getCharacters(data) {
 })();
 
 // FETCH DISNEY DATA EXAMPLE
+
+// data endpoint url -> where are we fetching from?
+const DISNEY_API_URL = "https://api.disneyapi.dev/character";
+
+// async fetch function -> how we fetch
+
+async function fetchCharacters(url) {
+  try {
+    const response = await fetch(url);
+    // check if the response is ok and if not throw an error to our "catch"
+    if (!response.ok)
+      throw new Error(`Network response not ok: ${response.status}`);
+    // otherwise parse it as JSON and return it so we can render it
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error Fetching Data: ", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const characters = await fetchCharacters(DISNEY_API_URL);
+    characters.forEach((character) => {
+      console.log(character.name);
+    });
+  } catch (error) {
+    console.error("async await fetch failed", error.message);
+  }
+});
