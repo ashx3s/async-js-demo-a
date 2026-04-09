@@ -70,3 +70,5 @@ async function getCharacters(data) {
     console.error("async/await error: ", error.message);
   }
 })();
+
+// FETCH DISNEY DATA EXAMPLE
