@@ -85,8 +85,10 @@ async function fetchCharacters(url) {
     if (!response.ok)
       throw new Error(`Network response not ok: ${response.status}`);
     // otherwise parse it as JSON and return it so we can render it
-    const data = await response.json();
-    return data.data;
+    const jsonData = await response.json();
+    // "destructure" data out of the jsonData object
+    const { data } = jsonData;
+    return data;
   } catch (error) {
     console.error("Error Fetching Data: ", error);
   }
